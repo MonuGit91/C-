@@ -124,12 +124,13 @@ int pathCost3(vector<vector<int>*> *A, int row, int column)
 
 int main()
 {
+
 	vector<vector<int>*> *A;
-	int row = 4, column = 3;
+	int row, column; cin >> row >> column;
 
 	A = makeMatrix(row, column);
-	A = matrixInput(A, row, column);
-	printMatrix(A);
+	matrixInput(A, row, column);
+//	printMatrix(A);
 
 	cout << "Minimun path cost(Brute force): " << pathCost1(A, row, column) << endl;
 	cout << "Minimun path cost(Memoization): " << pathCost2(A, row, column) << endl;

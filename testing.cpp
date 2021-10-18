@@ -1,14 +1,36 @@
+//limyunkai19
 #include <iostream>
-#include <vector>
 using namespace std;
 
-int main()
-{
-	vector<vector<int>> *A = new vector<vector<int>>(10, vector<int>(10, -1));
-	for(int i = 0; i < 10; i++)
-	{
-		for(int j = 0; j < 10; j++) cout << A->at(i).at(j) << " ";
-		cout << endl;
-	}
+int main() {
+    int t; cin >> t;
+    
+    while(t--) {
+        int n, d, c, m;
+        cin >> n >> d >> c >> m;
+        
+        string s;
+        cin >> s;
+        
+        string ans = "YES";
+        for(int i = 0; i < s.size(); i++) {
+            if(s[i] == 'D') {
+                if(d == 0) {
+                    ans = "NO";
+                    break;
+                }
+                
+                d--;
+                c += m;
+            }
+            else {
+                if(c == 0) d = 0;
+                c--;
+            }
+        }
+        
+        cout << "Case #" << t+1 << ": " << ans << "\n";
+    }
+    
     return 0;
 }
