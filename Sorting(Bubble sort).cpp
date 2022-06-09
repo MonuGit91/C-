@@ -1,30 +1,40 @@
 #include <iostream>
 using namespace std;
+/*
+void swap(int &a, int &b) {
+	if(a == b) return;
+	a = a ^ b;
+	b = a ^ b;
+	a = a ^ b;
+}
+*/
 
-void BubbleSort(int A[], int n)
-{
-	for(int i = 0; i < n-1; i++)
-	{
-		for(int j = 0; j < n-1-i; j++)
-		{
-				if(A[j] > A[j+1]) 
-				{
-					int temp = A[j];
-					A[j] = A[j+1];
-					A[j+1] = temp;
-				}
+void BubbleSort(int A[], int n) {
+	int round, i;
+	bool flag;
+
+	for(round = 1; round < n; round++) {
+		flag = true;
+
+		for(i = 0; i < n - round; i++) {
+			if(A[i] > A[i+1]) {
+				swap(A[i], A[i+1]);
+				flag = false;
+			}
 		}
+
+		if(flag == true) break;
 	}
 }
+int main() {
+	int i;
+	int A[10];
 
-int main()
-{
-	int A[] = {10,9,8,7,6,5,4,3,2,1};
+	for(i = 0; i < 10; i++) A[i] = 10-i;
 
 	BubbleSort(A, 10);
 
-	for(int i = 0; i < 10; i++)
-	{
+	for(int i = 0; i < 10; i++) {
 		cout << A[i] << " ";
 	}
 	cout << endl;

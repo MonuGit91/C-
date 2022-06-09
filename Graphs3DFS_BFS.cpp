@@ -2,81 +2,122 @@
 #include <queue>
 using namespace std;
 
-void printDFS(bool** edgesMatrix, int vertices, int start, bool* visited) {
-	cout << start << endl;
-	visited[start] = true;
+void BFS(bool**, int);
+void helpBFS(bool**, int, int, bool*);
+void DFS(bool**, int);
+void helpDFS(bool**, int);
 
-	for(int i = 0; i < vertices; i++) {
-		if(i == start || visited[i]) continue;
-		if(edgesMatrix[start][i]) printDFS(edgesMatrix, vertices, i, visited);
-	}
-}
+/*--------------------------------------------------------BFS-------------------------------------------------------->*/
+void helpBFS(bool** graph, int V, int start, bool* visited) {
+//  making queue for teaversing the graph
+    queue<int> pending;
+    pending.push(start);
+    visited[start] = true;
 
-void DFS(bool** edgesMatrix, int vertices) {
-	bool* visited = new bool[vertices];
-	for(int i = 0; i < vertices; i++) visited[i] = false;
-	
-	for(int i = 0; i < vertices; i++) {
-		if(!visited[i]) printDFS(edgesMatrix, vertices, i, visited);
-	}
-	delete [] visited;
-}
+    while(pending.empty() == false)
+    {
+        int st = pending.front();
+        cout << st << " ";
+        pending.pop();
 
-void printBFS(bool** edgesMatrix, int vertices, int start, bool* visited) {
-	queue<int> pendingQueue;
-	pendingQueue.push(start);
-	visited[start] = true;
-
-	while(!pendingQueue.empty()) {
-		start = pendingQueue.front();
-		pendingQueue.pop();
-
-		cout << start << endl;
-
-		for(int i = 0; i < vertices; i++) {
-
-			if(edgesMatrix[start][i] && !visited[i]) {
-				pendingQueue.push(i);
-				visited[i] = true;
-			}
-		}
-	}
-}
-
-void BFS(bool** edgesMatrix, int vertices) {
-	bool* visited = new bool[vertices];
-    for(int i = 0; i < vertices; i++) visited[i] = false;
-
-	for(int i = 0; i < vertices; i++) {
-        if(!visited[i]) printBFS(edgesMatrix, vertices, i, visited);
+//      putting all non visited vertex into queue
+        for(int ed = 0; ed < V; ed++) {
+            if(graph[st][ed] == true && visited[ed] == false) {
+                pending.push(ed);
+                visited[ed] = true;
+            }
+        }
     }
-	delete [] visited;
 }
-//main Method
+
+void BFS(bool** graph, int V) {
+//  for marking the visited vertices
+    bool* visited = new bool[V];
+
+    for(int i = 0; i < V; i++) visited[i] = false;
+
+//  make sure that all the vertices are visited
+    for(int st = 0; st < V; st++) {
+        if(visited[st] == false)    helpBFS(graph, V, st, visited);
+    }
+}
+
+
+/*---------------------------------------------------------------DFS----------------------------------------------------------->*/
+void helpDFS(bool** graph, int n, int start, bool* visited) {
+    cout << start << " ";
+    visited[start] = true;
+    
+    for(int i = 0; i < n; i++) {
+        if(graph[start][i] && !visited[i]) {
+            helpDFS(graph, n, i, visited);
+        }
+    }
+}
+
+void DFS(bool** graph, int n) {
+    bool* visited = new bool[n];
+    
+    for(int i = 0; i < n; i++) {
+        visited[i] = false;
+    }
+    
+    for(int i = 0; i < n; i++) {
+        if(!visited[i]) {
+            helpDFS(graph, n, i, visited);
+        }
+    }
+}
+
+//--------------------------------------------------------main function------------------------------------------------------------
 int main() {
-	int vertices, edges;
-	cin >> vertices >> edges;
+    int V, E; // V = vertices, E = Edges
 
-	//creating 2D arr to store edges
-	bool** edgesMatrix = new bool*[vertices];
-	for(int i = 0; i < vertices; i++) {
-		edgesMatrix[i] = new bool[vertices];
-		for(int j = 0; j < vertices; j++) edgesMatrix[i][j] = false;
-	}
+    cin >> V >> E;
 
-	//storing edges
-	for(int i = 0; i < edges; i++) {
-		int edgeStart, edgeEnd;
-		cin >> edgeStart >> edgeEnd;
-		edgesMatrix[edgeStart][edgeEnd] = true;
-		edgesMatrix[edgeEnd][edgeStart] = true;
-	}
+//  Making Adjacency matrix with value false
+    bool** graph = new bool*[V];
 
-	//BFS
-	DFS(edgesMatrix, vertices);
-	cout << endl;
-	BFS(edgesMatrix, vertices);
-	for(int i = 0; i < vertices; i++) delete [] edgesMatrix[i];
-	delete [] edgesMatrix;
-	return 0;
+    for(int i = 0; i < V; i++) {
+        graph[i] = new bool[V];
+
+        for(int j = 0; j < V; j++) graph[i][j] = false;
+    }
+
+//  Taking edges in Adjacency matrix
+    for(int i = 0; i < E; i++) {
+        int st, ed;
+
+        cin >> st >> ed;
+        graph[st][ed] = true;
+        graph[ed][st] = true;
+    }
+
+//  calling breadth first search
+   cout << "BFS: ";
+   BFS(graph, V);
+	
+//  calling depth first search
+	cout << "\nDFS: ";
+	DFS(graph, V);
+
+//  deleting graph
+    for(int i = 0; i < V; i++) delete [] graph[i];
+    delete [] graph;
 }
+
+/*
+9 10
+0 8
+1 6
+1 7
+1 8
+5 8
+6 0
+7 3
+7 4
+8 7
+2 5
+BFS: 0 6 8 1 5 7 2 3 4
+DFS: 0 6 1 7 3 4 8 5 2 %
+*/
