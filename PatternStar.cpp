@@ -2,17 +2,24 @@
 using namespace std;
 
 void upperStar(int n) {
-	for(int i = 0; i < n-1; i++) {
-		for(int j = 0; j < n*2-1+i; j++) {
-			if(j < 2*n-1-i-1) cout << " ";
+	int baseOfStar = 1;
+	for(int i = 2; i <= n; i++) baseOfStar += 2;
+	int midOfBase = baseOfStar/2+1;
+
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < n+midOfBase+i; j++) {
+			if(j < n+midOfBase-i-1) cout << " ";
 			else cout << "*";
 		}cout << endl;
 	}
 }
 
 void upperMidStar(int n) {
-	for(int i = 0; i < n; i++) {
-		for(int  j = 0; j < 3*n - i; j++) {
+	int baseOfStar = 1;
+	for(int i = 2; i <= n; i++) baseOfStar += 2;
+
+	for(int i = 1; i < n; i++) {
+		for(int  j = 0; j < 2*n + baseOfStar - i; j++) {
 			if(j < i) cout << " ";
 			else {
 				cout << "*";
@@ -22,8 +29,11 @@ void upperMidStar(int n) {
 }
 
 void lowerStar(int n) {
-	for(int i = 0; i < n-1; i++) {
-		for(int j = 0; j < 2*n-i; j++) {
+	int baseOfStar = 1;
+	for(int i = 2; i <= n; i++) baseOfStar += 2;
+
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < n+baseOfStar-i; j++) {
 			if(j < n+i) cout << " ";
 			else cout << "*";
 		}cout << endl;
@@ -31,17 +41,21 @@ void lowerStar(int n) {
 }
 
 void lowarMidStar(int n) {
-	for(int i = 0; i < n-1; i++) {
-		for(int j = 0; j < (2*n+1)+1+i; j++) {
-			if(j < n-2-i) cout << " ";
+	int baseOfStar = 1;
+	for(int i = 2; i <= n; i++) baseOfStar += 2;
+
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < (n+baseOfStar)+i; j++) {
+			if(j < n-i) cout << " ";
 			else cout << "*";
 		}cout << endl;
 	}
 }
 
 int main() {
-	upperStar(3);
-	upperMidStar(3);
-	lowarMidStar(3);
-	lowerStar(3);
+	int n = 5;
+	upperStar(n);
+	upperMidStar(n);
+	lowarMidStar(n);
+	lowerStar(n);
 }
