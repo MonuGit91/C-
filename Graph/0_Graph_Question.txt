@@ -1,10 +1,27 @@
-1GraphsDFS_BFS.cpp
-733. Flood Fill
-200. Number of Islands
-695. Max Area of Island
-1254. Number of Closed Islands
-1020. Number of Enclaves
-1905. Count Sub Islands
-1162. As Far from Land as Possible
-417. Pacific Atlantic Water Flow
-1091. Shortest Path in Binary Matrix
+1GraphsDFS_BFS
+2_GraphsHasPath
+3_GraphsGetPath
+4_GraphsIsConnected
+5_GraphsAllConnectedComponents
+6_GraphsIsland
+7_GraphsCodingNonja
+8_GraphsConnectingDots
+9_GraphLargestPiece
+10_Graph3Cycle
+11_kruskalAlgorithm
+12_prims
+13_dijkstra
+14_cycleDetectionUnorderedGraph
+15_cycleDetectionDirectedGraph
+16_1091. Shortest Path in Binary Matrix
+17_1926. Nearest Exit from Entrance in Maze
+18_542. 01 Matrix
+19_934. Shortest Bridge
+20_733. Flood Fill
+21_200. Number of Islands
+22_695. Max Area of Island
+23_1254. Number of Closed Islands
+24_1020. Number of Enclaves
+25_1905. Count Sub Islands
+26_1162. As Far from Land as Possible
+27_417. Pacific Atlantic Water Flow

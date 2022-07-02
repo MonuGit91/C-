@@ -39,11 +39,10 @@ void getPathBFS_map(bool** graph, int &V, int start, int end, vector<bool>* visi
 
     if(flag) {
         cout << end << " ";
-        while(path[end] != start) {
+        while(end != start) {
             cout << path[end] << " ";
             end = path[end];
         }
-        cout << start << " ";
     }
 }
 
@@ -53,7 +52,7 @@ void getPathBFS_matrix(bool** graph, int &V, int start, int end, vector<bool>* v
 	visited->at(start) = true;
 	bool flag = false;
 
-	vector<vector<bool> > path(V, (vector<bool>(V, false)));
+	vector<int> path(V, -1);
 
 	while(pending.size() > 0 && !flag) {
 		int st = pending.front();
@@ -64,7 +63,7 @@ void getPathBFS_matrix(bool** graph, int &V, int start, int end, vector<bool>* v
 				visited->at(i) = true;
 				pending.push(i);
 
-				path[st][i] = true;
+				path[i] = st;
 				if(i == end) {
 					flag = true;
 					break;
@@ -76,12 +75,9 @@ void getPathBFS_matrix(bool** graph, int &V, int start, int end, vector<bool>* v
 
 	if(flag) {
 		cout << end << " ";
-		for(int i = 0; i < V; i++) {
-			if(path[i][end]) {
-				cout << i << " ";
-				end = i;
-				i = -1;
-			}
+		while(start != end) {
+			cout << path[end] << " ";
+			end = path[end];
 		}
 	}
 }

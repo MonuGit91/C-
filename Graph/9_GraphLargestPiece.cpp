@@ -9,15 +9,15 @@ bool valid(int &n, int &r, int &c) {
     return (r >= 0 && c >= 0 && r < n && c < n);
 }
 
-int dfs(vector<vector<int> > &cake, int &n, int r, int c, int** visited, int count) {
+int dfs(vector<vector<int> > &cake, int &n, int r, int c, int** visited) {
     visited[r][c] = true;
-    
+    int count = 0;//**for each row & col initialy "count" will be "0"
     for(int i = 0; i < 4; i++) {
         int x = r + direction[i][0];
         int y = c + direction[i][1];
         
         if(valid(n, x, y) && cake[x][y] == 1 && !visited[x][y]) {
-            count += dfs(cake, n, x, y, visited, 0); //**for each direction initialy "count" will be "0"
+            count += dfs(cake, n, x, y, visited); 
         }
     }
 
@@ -40,7 +40,7 @@ int getBiggestPieceSize(vector<vector<int> > &cake, int n) {
     for(int i = 0; i < n; i++) {
         for(int j = 0; j < n; j++) {
             if(!visited[i][j] && cake[i][j] == 1) {
-                maximum = max(maximum, dfs(cake, n, i, j, visited, 0));
+                maximum = max(maximum, dfs(cake, n, i, j, visited));
             }
         }
     }
