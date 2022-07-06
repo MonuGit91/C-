@@ -1,54 +1,47 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
 bool validity(int sides[], int r, int c) {
     return (sides[0] >= 0 && sides[0] < r && sides[1] >= 0 && sides[1] < c);
 }
 
-bool dfs(vector<vector<char> > &board, int r, int c, int r1, int c1, int sr1, int sc1,  bool** visited, int count) {
+bool dfs(vector<vector<char> > &board, int R, int C, int r1, int c1, int sr1, int sc1,  bool** visited, int count) {
     visited[r1][c1] = true;
-    
+
     int sides[4][2] = {{r1, c1+1},{r1+1, c1},{r1, c1-1},{r1-1, c1}};
 
     for(int i = 0; i < 4; i++) {
         int a = sides[i][0];
         int b = sides[i][1];
-        
-        if(validity(sides[i], r, c) && board[a][b] == board[r1][c1]) {
+
+        if(validity(sides[i], R, C) && board[a][b] == board[r1][c1]) {
             if(a == sr1 && b == sc1 && count >= 4) return true;//** teaches 
-    
-            if(!visited[a][b] && dfs(board, r, c, a, b, sr1, sc1, visited, count+1)) return true;
-        }   
-    }   
-//    visited[r1][c1] = false;
+
+            if(!visited[a][b] && dfs(board, R, C, a, b, sr1, sc1, visited, count+1)) return true;
+        }
+    }
+    visited[r1][c1] = false;
     return false;
 }
 
 
-bool hasCycle(vector<vector<char> > &board, int r, int c) {
+bool hasCycle(vector<vector<char> > &board, int R, int C) {
     // Write your code here.
-    bool** visited = new bool*[r];
-    for(int i = 0; i < r; i++) {
-        visited[i] = new bool[c];
-        for(int j = 0; j < c; j++) visited[i][j] = false;
-    }   
-    
-    for(int i = 0; i < 26; i++) {
-        char find = ('A'+i);
-    
-        //finding index of specific charector
-        for(int r1 = 0; r1 < r; r1++) {
-            for(int c1 = 0; c1 < c; c1++) {
-                if(board[r1][c1] == find) {
-                    if(dfs(board, r, c, r1, c1, r1, c1, visited, 1)) return true;
-                }   
-            }   
-        }   
-    }   
+    bool** visited = new bool*[R];
+    for(int i = 0; i < R; i++) {
+        visited[i] = new bool[C];
+        for(int j = 0; j < C; j++) visited[i][j] = false;
+    }
+
+
+        //finding loop from each character
+        for(int r1 = 0; r1 < R; r1++) {
+            for(int c1 = 0; c1 < C; c1++) {
+                if(dfs(board, R, C, r1, c1, r1, c1, visited, 1)) return true;
+            }
+        }
     return false;
 }
-
 
 int main() {
     int n, m;
