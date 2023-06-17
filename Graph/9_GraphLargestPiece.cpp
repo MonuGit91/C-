@@ -9,14 +9,14 @@ bool valid(int &n, int &r, int &c) {
     return (r >= 0 && c >= 0 && r < n && c < n);
 }
 
-int dfs(vector<vector<int> > &cake, int &n, int r, int c, int** visited) {
+int dfs(vector<vector<char> > &cake, int &n, int r, int c, int** visited) {
     visited[r][c] = true;
     int count = 0;//**for each row & col initialy "count" will be "0"
     for(int i = 0; i < 4; i++) {
         int x = r + direction[i][0];
         int y = c + direction[i][1];
         
-        if(valid(n, x, y) && cake[x][y] == 1 && !visited[x][y]) {
+        if(valid(n, x, y) && cake[x][y] == 'T' && !visited[x][y]) {
             count += dfs(cake, n, x, y, visited); 
         }
     }
@@ -24,7 +24,7 @@ int dfs(vector<vector<int> > &cake, int &n, int r, int c, int** visited) {
     return count+1;
     
 }
-int getBiggestPieceSize(vector<vector<int> > &cake, int n) {
+int getBiggestPieceSize(vector<vector<char> > &cake, int n) {
     // Write your code here
     int** visited = new int*[n];
     
@@ -39,7 +39,7 @@ int getBiggestPieceSize(vector<vector<int> > &cake, int n) {
     int maximum = INT_MIN;
     for(int i = 0; i < n; i++) {
         for(int j = 0; j < n; j++) {
-            if(!visited[i][j] && cake[i][j] == 1) {
+            if(!visited[i][j] && cake[i][j] == 'T') {
                 maximum = max(maximum, dfs(cake, n, i, j, visited));
             }
         }
@@ -52,7 +52,7 @@ int main() {
     int n;
     cin >> n;
 
-    vector<vector<int> > cake(n, vector<int>(n));
+    vector<vector<char> > cake(n, vector<char>(n));
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
